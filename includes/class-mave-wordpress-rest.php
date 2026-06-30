@@ -30,19 +30,18 @@ final class Mave_WordPress_Rest
         register_rest_route('mave/v1', '/upload-token', array(
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => array($this, 'create_upload_token'),
-            'permission_callback' => array($this, 'can_edit_posts'),
-            'args' => array(
-                'subject' => array('sanitize_callback' => 'sanitize_text_field'),
-                'collection' => array('sanitize_callback' => 'sanitize_text_field'),
-                'target' => array('sanitize_callback' => 'sanitize_text_field'),
-                'max_age' => array('sanitize_callback' => 'absint'),
-            ),
+            'permission_callback' => array($this, 'can_upload_files'),
         ));
     }
 
     public function can_edit_posts()
     {
         return current_user_can('edit_posts');
+    }
+
+    public function can_upload_files()
+    {
+        return current_user_can('upload_files');
     }
 
     public function list_videos(WP_REST_Request $request)
@@ -82,19 +81,7 @@ final class Mave_WordPress_Rest
             );
         }
 
-        $subject = trim((string) $request->get_param('subject'));
-
-        if ('' === $subject) {
-            $subject = trim((string) $request->get_param('collection'));
-        }
-
-        if ('' === $subject) {
-            $subject = trim((string) $request->get_param('target'));
-        }
-
-        if ('' === $subject && !empty($settings['upload_subject'])) {
-            $subject = trim((string) $settings['upload_subject']);
-        }
+        $subject = !empty($settings['upload_subject']) ? trim((string) $settings['upload_subject']) : '';
 
         if ('' === $subject) {
             $subject = (new Mave_WordPress_Api_Client($settings))->discover_upload_subject();
@@ -107,7 +94,7 @@ final class Mave_WordPress_Rest
         $token = Mave_WordPress_JWT::sign_api_key(
             $api_key,
             $subject,
-            $request->get_param('max_age') ?: 7200
+            7200
         );
 
         return rest_ensure_response(array(

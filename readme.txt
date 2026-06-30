@@ -1,5 +1,5 @@
 === Mave Video ===
-Contributors: mave
+Contributors: davidvanleeuwen
 Tags: video, media, block, gutenberg, upload
 Requires at least: 6.5
 Tested up to: 7.0
@@ -20,31 +20,38 @@ The plugin stores the Mave API key server-side in WordPress. The editor uses
 WordPress REST routes and short-lived upload tokens scoped to the configured
 Mave space or collection.
 
-== Third-party services ==
+== External services ==
 
-This plugin connects to Mave, an external video hosting and playback service,
-when a site administrator configures a Mave API key and editors use the Mave
-block or shortcode.
+This plugin connects to Mave, an external video hosting, upload, playback, and
+video analytics service. Mave is provided by Mave and uses the mave.io and
+video-dns.com domains listed below.
 
 Mave service: https://www.mave.io/
 Terms of Use: https://www.mave.io/terms
 Privacy Policy: https://www.mave.io/privacy
 
-The plugin uses Mave services in these cases:
+The plugin uses Mave services under these conditions:
 
-* The WordPress server sends authenticated API requests to Mave to list videos
-  and collections for the block picker.
-* The editor requests short-lived upload tokens from WordPress and uploads video
-  files directly to the configured Mave upload endpoint.
-* The editor and front end load the Mave component module from the configured
-  component module URL so the mave-player and mave-upload web components can
-  render and operate.
+* When an administrator configures a Mave API key, the WordPress server sends
+  authenticated API requests to api.mave.io to list videos and collections for
+  the block picker. These requests send the configured API key and request
+  parameters such as page number, page size, collection id, and archived filter.
+* When an editor uploads a file through the Mave block, WordPress creates a
+  short-lived upload token scoped to the configured Mave upload target. The
+  editor's browser connects to dash.mave.io for upload status and uploads the
+  selected video or audio file to upload.mave.io. The upload sends the selected
+  file, filename, file type, upload id, and short-lived upload token.
+* When the editor or a public page renders a Mave block or shortcode, the
+  browser loads the Mave component module from cdn.video-dns.com so the
+  mave-player and mave-upload web components can render and operate.
 * Public pages that contain a Mave player load thumbnails, video playback
-  assets, and related player resources from the configured Mave CDN endpoints.
-* The Mave player may send privacy-friendly aggregate playback events to the
-  configured Mave metrics endpoint. Mave uses these events to provide video
-  analytics without cookies, cross-site tracking, advertising identifiers, or
-  viewer profiling.
+  assets, and related player resources from video-dns.com CDN endpoints such as
+  space-{space-id}.video-dns.com. These requests include the requested video
+  asset URL and normal browser request metadata.
+* The Mave player may send privacy-friendly aggregate playback events to
+  metrics.video-dns.com. These events include the embed id and playback event
+  data needed for video analytics. Mave analytics do not use cookies,
+  cross-site tracking, advertising identifiers, or viewer profiling.
 
 The Mave API key is stored in WordPress options and is not exposed to public
 visitors. Advanced settings allow administrators to change the Mave service
