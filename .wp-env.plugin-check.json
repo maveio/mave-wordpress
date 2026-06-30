@@ -1,0 +1,6 @@
+{
+  "core": "https://wordpress.org/latest.zip",
+  "plugins": [".wp-env-plugin/mave-wordpress"],
+  "testsEnvironment": false,
+  "port": 8890
+}

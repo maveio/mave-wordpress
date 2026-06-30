@@ -1,0 +1,9 @@
+node_modules/
+wordpress/
+tests-WordPress/
+.wp-env/
+.wp-env-plugin/
+.playwright-cli/
+dist/
+.dist/
+npm-debug.log*

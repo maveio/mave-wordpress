@@ -1,0 +1,9 @@
+.mave-wordpress-player {
+  display: block;
+  margin-bottom: 1.5em;
+}
+
+.mave-wordpress-player mave-player {
+  display: block;
+  width: 100%;
+}

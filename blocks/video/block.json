@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mave/video",
+  "version": "0.0.1",
+  "title": "Mave Video",
+  "category": "media",
+  "icon": "video-alt3",
+  "description": "Select or upload a video from Mave.",
+  "textdomain": "mave-video",
+  "supports": {
+    "align": ["wide", "full"],
+    "html": false
+  },
+  "attributes": {
+    "embedId": {
+      "type": "string",
+      "default": ""
+    },
+    "videoName": {
+      "type": "string",
+      "default": ""
+    },
+    "posterImage": {
+      "type": "string",
+      "default": ""
+    },
+    "autoplay": {
+      "type": "string",
+      "default": ""
+    },
+    "loop": {
+      "type": "boolean",
+      "default": false
+    },
+    "controls": {
+      "type": "string",
+      "default": ""
+    },
+    "aspectRatio": {
+      "type": "string",
+      "default": ""
+    },
+    "theme": {
+      "type": "string",
+      "default": ""
+    },
+    "color": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "mave-wordpress-video-editor",
+  "viewScript": "mave-wordpress-frontend",
+  "style": "mave-wordpress-block-style",
+  "editorStyle": "mave-wordpress-block-editor"
+}
