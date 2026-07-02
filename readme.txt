@@ -12,71 +12,65 @@ Upload, choose, and embed Mave videos from the WordPress block editor.
 
 == Description ==
 
-Mave adds a Gutenberg block for embedding videos hosted in Mave. Editors can
-choose an existing Mave video, upload a new video directly to Mave, and adjust
-player options per block.
+Mave adds a privacy-friendly video block to WordPress. Upload videos to Mave,
+choose existing videos from your Mave library, and embed a fast, cookieless
+player in the block editor.
 
-The plugin stores the Mave API key server-side in WordPress. The editor uses
-WordPress REST routes and short-lived upload tokens scoped to the configured
-Mave space or collection.
+= Features =
+
+* Mave Video block for Gutenberg.
+* Direct uploads to Mave.
+* Mave library picker with collection support.
+* Global player defaults with per-block overrides.
+* [mave_video] shortcode support.
 
 == External services ==
 
-This plugin connects to Mave, an external video hosting, upload, playback, and
-video analytics service. Mave is provided by Mave and uses the mave.io and
-video-dns.com domains listed below.
+This plugin requires Mave, an external video hosting, upload, playback, and
+privacy-friendly analytics service. Mave is provided by Mave and uses the
+mave.io and video-dns.com domains listed below.
 
 Mave service: https://www.mave.io/
 Terms of Use: https://www.mave.io/terms
 Privacy Policy: https://www.mave.io/privacy
 
-The plugin uses Mave services under these conditions:
+Data is sent to Mave under these conditions:
 
 * When an administrator configures a Mave API key, the WordPress server sends
-  authenticated API requests to api.mave.io to list videos and collections for
-  the block picker. These requests send the configured API key and request
-  parameters such as page number, page size, collection id, and archived filter.
+  authenticated requests to api.mave.io to list videos and collections. These
+  requests include the API key and list parameters such as page, page size,
+  collection id, and archived filter.
 * When an editor uploads a file through the Mave block, WordPress creates a
-  short-lived upload token scoped to the configured Mave upload target. The
-  editor's browser connects to dash.mave.io for upload status and uploads the
-  selected video or audio file to upload.mave.io. The upload sends the selected
-  file, filename, file type, upload id, and short-lived upload token.
-* When the editor or a public page renders a Mave block or shortcode, the
-  browser loads the Mave component module from cdn.video-dns.com so the
-  mave-player and mave-upload web components can render and operate.
-* Public pages that contain a Mave player load thumbnails, video playback
-  assets, and related player resources from video-dns.com CDN endpoints such as
-  space-{space-id}.video-dns.com. These requests include the requested video
-  asset URL and normal browser request metadata.
-* The Mave player may send privacy-friendly aggregate playback events to
-  metrics.video-dns.com. These events include the embed id and playback event
-  data needed for video analytics. Mave analytics do not use cookies,
-  cross-site tracking, advertising identifiers, or viewer profiling.
+  short-lived upload token. The editor's browser connects to dash.mave.io for
+  upload status and uploads the selected file to upload.mave.io. Uploads send
+  the file, filename, file type, upload id, and short-lived upload token.
+* When a Mave block or shortcode is rendered, the browser loads the Mave
+  component module from cdn.video-dns.com and loads thumbnails, video files, and
+  player resources from video-dns.com CDN endpoints.
+* The Mave player may send aggregate playback events to metrics.video-dns.com.
+  These events include the embed id and playback data needed for video
+  analytics. Mave analytics do not use cookies, cross-site tracking,
+  advertising identifiers, or viewer profiling.
 
-The Mave API key is stored in WordPress options and is not exposed to public
-visitors. Advanced settings allow administrators to change the Mave service
-endpoints when using another Mave environment.
-
-= Features =
-
-* Mave Video block.
-* Direct Mave uploads.
-* Mave library picker with collection support.
-* Global player theme and color defaults.
-* Per-block player overrides.
-* [mave_video] shortcode support.
+The Mave API key is stored server-side in WordPress options and is not exposed
+to public visitors.
 
 == Installation ==
 
-1. Upload the plugin files to the /wp-content/plugins/mave-video directory,
-   or install the plugin zip through the WordPress admin.
-2. Activate the plugin.
-3. Open Settings > Mave.
-4. Paste your Mave API key.
+1. Create or sign in to a Mave account.
+2. Copy your Mave API key from the Mave dashboard.
+3. Install and activate the plugin in WordPress.
+4. Open Settings > Mave and paste your API key.
 5. Optionally set an upload target. A Mave collection id scopes uploads and the
    block picker to that collection.
+6. Add a Mave Video block to a page or post.
 
 == Frequently Asked Questions ==
+
+= Do I need a Mave account? =
+
+Yes. A Mave account and API key are required to upload, choose, and embed Mave
+videos from WordPress.
 
 = Is the Mave API key exposed to editors? =
 
@@ -91,6 +85,11 @@ Yes. Set Upload target in Settings > Mave to a Mave collection id.
 
 Yes. Configure global defaults in Settings > Mave, then override theme or color
 from the block settings sidebar when needed.
+
+== Screenshots ==
+
+1. Choose an existing Mave video from the block editor picker.
+2. Preview a selected Mave video and adjust player options in the block sidebar.
 
 == Changelog ==
 

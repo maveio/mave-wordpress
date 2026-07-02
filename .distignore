@@ -10,6 +10,7 @@ tests-WordPress
 .wp-env.plugin-check.json
 .wp-env-plugin
 .playwright-cli
+.wordpress-org
 dist
 .dist
 *.log
