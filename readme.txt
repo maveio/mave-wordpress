@@ -4,7 +4,7 @@ Tags: video, media, block, gutenberg, upload
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.0.1
+Stable tag: 0.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,9 +30,9 @@ This plugin requires Mave, an external video hosting, upload, playback, and
 privacy-friendly analytics service. Mave is provided by Mave and uses the
 mave.io and video-dns.com domains listed below.
 
-Mave service: https://www.mave.io/
-Terms of Use: https://www.mave.io/terms
-Privacy Policy: https://www.mave.io/privacy
+Mave service: [https://www.mave.io/](https://www.mave.io/)
+Terms of Use: [https://www.mave.io/terms](https://www.mave.io/terms)
+Privacy Policy: [https://www.mave.io/privacy](https://www.mave.io/privacy)
 
 Data is sent to Mave under these conditions:
 
@@ -57,10 +57,10 @@ to public visitors.
 
 == Installation ==
 
-1. Create or sign in to a Mave account.
-2. Copy your Mave API key from the Mave dashboard.
+1. [Create or sign in to a Mave account](https://dash.mave.io/signup).
+2. Create and/or copy your [Mave API key](https://dash.mave.io/settings/developer).
 3. Install and activate the plugin in WordPress.
-4. Open Settings > Mave and paste your API key.
+4. In the WordPress admin, open Settings > Mave and paste your API key.
 5. Optionally set an upload target. A Mave collection id scopes uploads and the
    block picker to that collection.
 6. Add a Mave Video block to a page or post.
@@ -92,6 +92,11 @@ from the block settings sidebar when needed.
 2. Preview a selected Mave video and adjust player options in the block sidebar.
 
 == Changelog ==
+
+= 0.0.2 =
+* Automatically use the API key's space when no video location is configured.
+* Support space ids and collection ids for upload and library scope.
+* Improve the video location settings and move them under Advanced settings.
 
 = 0.0.1 =
 * Initial public release.

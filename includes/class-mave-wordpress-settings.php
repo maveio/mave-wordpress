@@ -45,9 +45,16 @@ final class Mave_WordPress_Settings
 
         $api_key = isset($input['api_key']) ? trim((string) $input['api_key']) : '';
         $next['api_key'] = '' === $api_key ? $existing['api_key'] : Mave_WordPress::normalize_api_key($api_key);
-        $next['upload_subject'] = isset($input['upload_subject'])
-            ? sanitize_text_field(trim((string) $input['upload_subject']))
-            : '';
+        $upload_subject = isset($input['upload_subject']) ? trim((string) $input['upload_subject']) : '';
+        $next['upload_subject'] = Mave_WordPress::sanitize_upload_subject($upload_subject);
+
+        if ('' !== $upload_subject && '' === $next['upload_subject']) {
+            add_settings_error(
+                'mave_wordpress_settings',
+                'mave_wordpress_invalid_upload_subject',
+                __('A space hash cannot be used as a video location. Leave this empty for the entire space, or enter a space id or collection id.', 'mave-video')
+            );
+        }
         $next['player_theme'] = isset($input['player_theme'])
             ? Mave_WordPress::sanitize_player_theme($input['player_theme'])
             : $defaults['player_theme'];
@@ -120,17 +127,23 @@ final class Mave_WordPress_Settings
                             </th>
                             <td><?php $this->render_api_key_field($settings); ?></td>
                         </tr>
-                        <tr>
-                            <th scope="row">
-                                <label for="mave_wordpress_upload_subject"><?php esc_html_e('Upload target', 'mave-video'); ?></label>
-                            </th>
-                            <td><?php $this->render_upload_subject_field($settings); ?></td>
-                        </tr>
                     </tbody>
                 </table>
 
                 <details class="mave-wordpress-settings-advanced">
                     <summary><?php esc_html_e('Advanced settings', 'mave-video'); ?></summary>
+                    <h2><?php esc_html_e('Video library', 'mave-video'); ?></h2>
+                    <table class="form-table" role="presentation">
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <label for="mave_wordpress_upload_subject"><?php esc_html_e('Video location', 'mave-video'); ?></label>
+                                </th>
+                                <td><?php $this->render_upload_subject_field($settings); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                     <h2><?php esc_html_e('Player defaults', 'mave-video'); ?></h2>
                     <p>
                         <?php esc_html_e('These values apply to every Mave player unless a block overrides them.', 'mave-video'); ?>
@@ -231,10 +244,10 @@ final class Mave_WordPress_Settings
         printf(
             '<input id="mave_wordpress_upload_subject" type="text" class="regular-text code" name="mave_wordpress_settings[upload_subject]" value="%s" placeholder="%s" />',
             esc_attr($value),
-            esc_attr__('Auto-detect from Mave library', 'mave-video')
+            esc_attr__('Entire space (default)', 'mave-video')
         );
         echo '<p class="description">';
-        esc_html_e('Optional space hash/id or collection id for new mave-upload files. When this is a collection id, the block picker uses that collection as its root.', 'mave-video');
+        esc_html_e('Optional. Enter a space id or collection id to choose where new videos are uploaded and which videos editors can browse and select. Leave blank to use the entire space.', 'mave-video');
         echo '</p>';
     }
 

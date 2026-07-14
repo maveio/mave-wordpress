@@ -37,6 +37,12 @@ final class Mave_WordPress_Api_Client
             return $response;
         }
 
+        if (!empty($response['space_id'])) {
+            return sanitize_text_field($response['space_id']);
+        }
+
+        // Backwards compatibility for Mave API versions that predate space_id
+        // on list responses. This fallback cannot discover an empty space.
         $items = isset($response['data']) && is_array($response['data']) ? $response['data'] : array();
 
         foreach ($items as $item) {
@@ -53,7 +59,7 @@ final class Mave_WordPress_Api_Client
 
         return new WP_Error(
             'mave_missing_upload_subject',
-            __('Could not infer the Mave space for uploads. Set an upload target in Mave settings.', 'mave-video'),
+            __('Could not identify the Mave space for uploads. Set an upload target in Mave settings.', 'mave-video'),
             array('status' => 400)
         );
     }

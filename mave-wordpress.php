@@ -3,7 +3,7 @@
  * Plugin Name: Mave Video
  * Plugin URI: https://github.com/maveio/mave-wordpress
  * Description: Embed and upload Mave videos from WordPress and the block editor.
- * Version: 0.0.1
+ * Version: 0.0.2
  * Author: Mave
  * Author URI: https://mave.io/
  * Text Domain: mave-video
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('MAVE_WORDPRESS_VERSION', '0.0.1');
+define('MAVE_WORDPRESS_VERSION', '0.0.2');
 define('MAVE_WORDPRESS_FILE', __FILE__);
 define('MAVE_WORDPRESS_DIR', plugin_dir_path(__FILE__));
 define('MAVE_WORDPRESS_URL', plugin_dir_url(__FILE__));

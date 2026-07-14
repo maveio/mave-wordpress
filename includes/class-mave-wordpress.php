@@ -89,11 +89,40 @@ final class Mave_WordPress
         $settings = is_array($settings) ? $settings : self::settings();
         $subject = isset($settings['upload_subject']) ? trim((string) $settings['upload_subject']) : '';
 
-        if (strlen($subject) <= 5) {
+        if (strlen($subject) <= 5 || self::is_space_id($subject)) {
             return '';
         }
 
         return sanitize_text_field($subject);
+    }
+
+    public static function sanitize_upload_subject($subject)
+    {
+        $subject = sanitize_text_field(trim((string) $subject));
+
+        // A five-character value is a public space hash, not an upload target
+        // id. Leaving the field empty scopes uploads to the API key's space.
+        if (5 === strlen($subject) && ctype_alpha($subject)) {
+            return '';
+        }
+
+        return $subject;
+    }
+
+    private static function is_space_id($value)
+    {
+        $value = (string) $value;
+
+        // Mave exposes database UUIDs as 22-character legacy ShortUUIDs. Keep
+        // accepting canonical UUIDs too for installations that stored one.
+        if (22 === strlen($value) && 1 === preg_match('/^[A-Za-z0-9]+$/', $value)) {
+            return true;
+        }
+
+        return 1 === preg_match(
+            '/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i',
+            $value
+        );
     }
 
     public static function endpoint_keys()
